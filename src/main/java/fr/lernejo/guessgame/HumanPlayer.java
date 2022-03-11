@@ -6,9 +6,10 @@ import java.util.Scanner;
 
 public class HumanPlayer implements Player{
     Logger console = LoggerFactory.getLogger("player");
+    Scanner sc = new Scanner(System.in);
     public long askNextGuess(){
-        Scanner sc = new Scanner(System.in);
-        return sc.nextLong();
+        long num = sc.nextLong();
+        return num;
     }
     public void respond(boolean lowerOrGreater){
         if (lowerOrGreater){

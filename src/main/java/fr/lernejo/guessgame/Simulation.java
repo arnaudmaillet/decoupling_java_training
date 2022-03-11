@@ -5,33 +5,40 @@ import fr.lernejo.logger.*;
 public class Simulation {
 
     private final Logger logger = LoggerFactory.getLogger("simulation");
-    private final Player player;  //TODO add variable type
-    private long numberToGuess; //TODO add variable type
+    private final Player player;
+    private long numberToGuess;
 
     public Simulation(Player player) {
         this.player = player;
-        //TODO implement me
     }
 
     public void initialize(long numberToGuess) {
         this.numberToGuess = numberToGuess;
-        //TODO implement me
     }
-
-    /**
-     * @return true if the player have guessed the right number
-     */
     private boolean nextRound() {
-        logger.log("Donnez un nombre svp?");
-        if (numberToGuess == player.askNextGuess()){
+        if (player.getClass() == HumanPlayer.class){
+            logger.log("Donnez un nombre svp?");
+        }
+        long guess = player.askNextGuess();
+        if (numberToGuess == guess){
+            logger.log("Vous avez trouvé");
             return true;
         }
-        this.player.respond(numberToGuess > player.askNextGuess());
-        //TODO implement me
+        this.player.respond(numberToGuess > guess);
         return false;
     }
 
-    public void loopUntilPlayerSucceed() {
-        while (!nextRound()){};
+    public void loopUntilPlayerSucceed(long nb) {
+        long i = 0;
+        long start = System.currentTimeMillis();
+        while (i != nb){
+            if (nextRound()){
+                break;
+            }
+            i++;
+        }
+        long end = System.currentTimeMillis();
+        
+        logger.log("Temps écoulé : " + Long.toString((end - start/1000)%60) + " secondes");
     }
 }
